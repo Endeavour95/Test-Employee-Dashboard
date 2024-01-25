@@ -1,38 +1,167 @@
-.App {
+/* Index page css */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  display: grid;
+  height: fit-content;
+}
+
+#root {
+  width: 100vw;
+  height: fit-content;
+  border-radius: 20px;
+}
+
+/* Main navbar css */
+#navdiv {
+  width: 100vw;
+  height: fit-content;
+  border-radius: 20px;
+  /* box-shadow: 0 0 10px rgb(98, 96, 96); */
+}
+
+nav input[type="button"] {
+  cursor: pointer;
+  font-size: 16px;
+  font-family: cursive;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: #fff;
+  width: 15vw;
+  height: 4vh;
+  border-radius: 20px;
+  margin: 5px 5px 5px 5px;;
+}
+
+input[type="button"]:hover {
+  background-color: #45a049;
+}
+
+/* Main lower div */
+#downdiv {
+  width: 100vw;
+  height: fit-content;
+  border-radius: 20px;
+  display: flex;
+}
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  height: fit-content;
+  text-align: center;
+  border-radius: 20px;
+  /* box-shadow: 0 0 10px rgb(98, 96, 96); */
+
+}
+
+th,h3 {
+  border-radius: 20px;
+  font-family: cursive;
+  font-size: large;
+  border-radius: 20px;
+  margin: 3px 0px 3px 0px;;
+  /* box-shadow: 0 0 10px rgb(98, 96, 96); */
+}
+
+td input[type="button"] {
+  cursor: pointer;
+  font-size: 16px;
+  font-family: cursive;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: #fff;
+  width: 17vw;
+  height: 4vh;
+  border-radius: 20px;
+  margin: 3px 0px 3px 0px;
+}
+
+#left {
+  width: 20vw;
+}
+
+#right {
+  width: 80vw;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+/* Registration page css */
+form {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 25%;
+  height: 70vh;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+select#myDropdown {
+  width: calc(100% - 16px);
+  padding: 12px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+select#myDropdown:focus {
+  outline: none;
+  border-color: #66afe9;
+}
+
+input[type="text"] {
+  width: calc(100% - 16px);
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  font-size: 14px;
+}
+
+form button {
+  background-color: #3b3636e2;
   color: white;
+  padding: 7px 20px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+select {
+  color: rgb(136, 136, 141);
+  padding: 5px 15px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  border: 1px solid #ccc;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#heading {
+  text-align: center;
+}
+
+#can {
+  float: inline-end;
+}
+
+button:hover {
+  background-color: #609f64;
+}
+
+#can:hover {
+  background-color: #089a00;
+}
+
+#sub:hover {
+  background-color: #b13232c5;
 }
