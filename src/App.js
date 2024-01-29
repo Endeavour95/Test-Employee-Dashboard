@@ -1,95 +1,101 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const departments = {
-  '1': {
-    deptId: 1,
-    deptName: "IT"
-  },
-  '2': {
-    deptId: 2,
-    deptName: "HR"
-  },
-  '3': {
-    deptId: 3,
-    deptName: "Engineering"
-  }
-}
-
-const message = {
-  empRegistered: "Employee registered successfully",
-  empExist: "Employee exist in the Employees table",
-  empEdited: "Employee details updated successfully",
-  empDeleted: "Employee associated with empId deleted successfully",
-  empNotExist: "Employee empId not found in Employess table"
-
-}
-
-
-// let show = false
-
-// let id;
-
-
-
-// displayEmployeeDetails() child
-function Details( props ) {
+function DisplayEmployeeDetails(props) {
   const labels = ["Employee Id : ", "First Name : ", "Last Name : ", "Salary : ", "Designation : ", "Department : "]
   return (
     <table id="details">
       <tbody>
         {
-          Object.values(props.employee).map((info, index) => {
-            return (
-              <tr>
-                <td>
-                  <label>{labels[index]}</label>
-                </td>
-                <td>
-                  <input type="text" value={info} disabled={props.status} />
-                </td>
-              </tr>
-            )
+          Object.keys(props.employee).map((key, index) => {
+            if (key != "") {
+              if (key == "empDept") {
+                // let dept = props.departments[props.employee[key]]
+                return (
+                  <tr>
+                    <td>
+                      <label>{labels[index]}</label>
+                    </td>
+                    <td>
+                      <select id="myList" onchange="favTutorial()" disabled={props.status}>
+                        <option value="" selected disabled hidden > {props.departments[props.employee[key]].deptName} </option>
+                        <option value="1" > IT </option>
+                        <option value="2" > HR </option>
+                        <option value="3" > Engineering </option>
+                      </select>
+                    </td>
+                  </tr>
+                )
+              }
+              return (
+                <tr>
+                  <td>
+                    <label>{labels[index]}</label>
+                  </td>
+                  <td>
+                    <input type="text" value={props.employee[key]} disabled={props.status} />
+                  </td>
+                </tr>
+              )
+            }
           })
         }
+        <tr>
+          <td>
+            <button >Edit</button>
+          </td>
+          <td>
+            <button >Delete</button>
+          </td>
+        </tr>
       </tbody>
     </table>
   )
 }
 
-// List() child
-function DisplayEmployeeDetails(props) {
-  return (
-    <>
-      <Details employee={props.employee} status={true} />
-      <NavBar names={{ "Edit": App, "Delete": App }} />
-    </>
-  )
-}
-
-// List() child
-
 // App() child
 const List = (props) => {
+  function setCss(employee) {
+    if (props.selectedEmployee === employee) {
+      return "hsla(64, 84%, 58%, 0.89)"
+    } else {
+      return "#4caf50"
+    }
+  }
+
+  // const handelSetEmployee = (employee) =>{
+  //   console.log("em---ployee", employee)
+  //   props.setEmpId(employee)
+  // }
+
   return (
     <tbody>
       {
-        Object.keys(props.emplist).map((employee, index) => {
-          // console.log("11",employee, "222", index+1)
+        Object.keys(props.employees).map((employee, index) => {
           return (
-            <tr><td><input key={index+1} type="button" value={props.emplist[employee].empFName + " " + props.emplist[employee].empLName} onClick={() => {
-              // const emp = props.emplist[employee]
-              props.disp(employee)
-            }}></input></td></tr>
-            )
+            <tr><td><input key={index + 1} type="button" style={{ backgroundColor: setCss(employee) }}
+              value={props.employees[employee].empFName + " " + props.employees[employee].empLName}
+              onClick={() => { props.setEmpId(employee) }} ></input></td></tr>
+          )
         })
+
+
+        // Object.keys(props.employees).map((employee, index) => {
+        //   console.log("11", employee)
+        //   return (
+        //     <tr><td><input key={index + 1} type="button" style={{ backgroundColor: setCss(employee) }}
+        //       value={props.employees[employee].empFName + " " + props.employees[employee].empLName}
+        //       onClick={() => handelSetEmployee(employee)} ></input></td></tr>
+        //   )
+        // })
+
       }
     </tbody>
   )
 }
 
-// App() and displayEmployeeDetails() child
+// App() and DisplayEmployeeDetails() child
 const NavBar = (props) => {
   return (
     <nav>
@@ -97,23 +103,27 @@ const NavBar = (props) => {
         Object.keys(props.names).map((name) => {
           return (
             <input key={name} type="button" defaultValue={name} onClick={props.names[name]} />
-            )
-          })
-        }
+          )
+        })
+      }
     </nav>
   )
 }
 
 function App() {
-
-  const [show, setshow] = useState(false)
-  const [id, setid] = useState('')
-  
-  function displaystatus(employee) {
-   setshow(true)
-   setid(employee)
-    // return {show, employee}
-    // displayEmployeeDetails(employee)
+  const departments = {
+    '1': {
+      deptId: 1,
+      deptName: "IT"
+    },
+    '2': {
+      deptId: 2,
+      deptName: "HR"
+    },
+    '3': {
+      deptId: 3,
+      deptName: "Engineering"
+    }
   }
 
   let employees = {
@@ -142,6 +152,20 @@ function App() {
       empDept: departments[3]?.deptId
     }
   }
+
+  const [empId, setEmpId] = useState('')
+
+  const [clonedEmployess, setClonedEmployess] = useState(employees)
+
+  function arrangeEmployees(employees, e) {
+    
+    if (e.target.value == "ASC") {
+      Object.keys.employees
+
+      setClonedEmployess(employees)
+    }
+  }
+
   return (
     <>
       <div id="navdiv">
@@ -149,21 +173,31 @@ function App() {
       </div>
       <div id="downdiv">
         <div id="left">
-          <table id="list">
-            <thead>
-              <tr>
-                <th>Employees List</th>
-              </tr>
-            </thead>
-            <List emplist={employees} disp={displaystatus} />
-          </table>
+          <div id='toolbar'>
+            <input placeholder='search'></input>
+            <select id="myList" onchange={(e)=>arrangeEmployees(employees, e)} setClonedEmployess={setClonedEmployess} >
+              <option value="" selected disabled hidden > Sort </option>
+              <option value="ASC" > ASC </option>
+              <option value="DESC" > DESC </option>
+            </select>
+          </div>
+          <div>
+            <table id="list">
+              <thead>
+                <tr>
+                  <th>Employees List</th>
+                </tr>
+              </thead>
+              <List employees={clonedEmployess} setEmpId={setEmpId} selectedEmployee={empId} />
+            </table>
+          </div>
         </div>
         <div id="right">
           <div>
             <h3>Employee Details</h3>
           </div>
           <div id="view">{
-            show ? <DisplayEmployeeDetails employee={employees[id]} /> : <p>Please select an employee to view details.</p>
+            empId ? <DisplayEmployeeDetails employee={employees[empId]} departments={departments} status={true} /> : <p>Please select an employee to view details.</p>
           }
           </div>
         </div>
@@ -171,26 +205,5 @@ function App() {
     </>
   )
 }
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
 
 export default App;

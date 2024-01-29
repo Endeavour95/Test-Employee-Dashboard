@@ -20,7 +20,7 @@ body {
   /* box-shadow: 0 0 10px rgb(98, 96, 96); */
 }
 
-nav input[type="button"] {
+nav input[type="button"], tr td button {
   cursor: pointer;
   font-size: 16px;
   font-family: cursive;
@@ -28,7 +28,8 @@ nav input[type="button"] {
   border-radius: 5px;
   background-color: #4caf50;
   color: #fff;
-  width: 15vw;
+  /* width: 15vw; */
+  width: fit-content;
   height: 4vh;
   border-radius: 20px;
   margin: 5px 5px 5px 5px;;
@@ -47,7 +48,7 @@ input[type="button"]:hover {
 }
 
 
-table {
+table[id="list"] {
   border-collapse: collapse;
   width: 100%;
   height: fit-content;
@@ -55,6 +56,19 @@ table {
   border-radius: 20px;
   /* box-shadow: 0 0 10px rgb(98, 96, 96); */
 
+}
+
+table[id="details"] {
+  /* display: flex; */
+  border-collapse: collapse;
+  /* width: 60vw; */
+  width: fit-content;
+  height: fit-content;
+  text-align: center;
+  /* justify-content: center; */
+  /* align-items: flex-start; */
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgb(98, 96, 96);
 }
 
 th,h3 {
@@ -89,7 +103,12 @@ td input[type="button"] {
   text-align: center;
 }
 
-
+div[id="view"] {
+  display: flex;
+  justify-content: center;
+  width:'100%';
+  /* align-items: center; */
+}
 
 /* Registration page css */
 form {
@@ -118,10 +137,20 @@ select#myDropdown:focus {
   border-color: #66afe9;
 }
 
-input[type="text"] {
-  width: calc(100% - 16px);
+td label {
+  /* width: calc(100% - 16px); */
+  /* justify-content: left; */
   padding: 8px;
-  margin-bottom: 16px;
+  border-radius: 16px;
+  font-size: 14px;
+}
+
+td input[type="text"] {
+  /* width: calc(100% - 16px); */
+  width: fit-content;
+  padding: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 16px;
