@@ -58,7 +58,7 @@ function DisplayEmployeeDetails(props) {
 const List = (props) => {
   function setCss(employee) {
     if (props.selectedEmployee === employee) {
-      return "hsla(64, 84%, 58%, 0.89)"
+      return "yellowgreen"
     } else {
       return "#4caf50"
     }
@@ -157,13 +157,26 @@ function App() {
 
   const [clonedEmployess, setClonedEmployess] = useState(employees)
 
-  function arrangeEmployees(employees, e) {
-    
-    if (e.target.value == "ASC") {
-      Object.keys.employees
+  function arrangeEmployees(employees, event) {
+    // console.log(event.target.value)
 
-      setClonedEmployess(employees)
-    }
+    // if (e.target.value == "ASC") {
+    //   Object.keys.employees
+
+    //   setClonedEmployess(employees)
+    // }
+    return true
+  }
+
+  function searchEmployee(event) {
+    // console.log(event.target.value)
+    let emplist = []
+    Object.keys(employees).map((empId, index) => {
+      const empName = employees[empId].empFName + " " + employees[empId].empLName
+      emplist.push({empId : empName})
+    })
+    let str = event.target.value
+
   }
 
   return (
@@ -174,11 +187,11 @@ function App() {
       <div id="downdiv">
         <div id="left">
           <div id='toolbar'>
-            <input placeholder='search'></input>
-            <select id="myList" onchange={(e)=>arrangeEmployees(employees, e)} setClonedEmployess={setClonedEmployess} >
-              <option value="" selected disabled hidden > Sort </option>
-              <option value="ASC" > ASC </option>
-              <option value="DESC" > DESC </option>
+            <input placeholder='🔎︎ Search...' onInput={(e) => { searchEmployee(e) }}></input>
+            <select id="myList" onChange={(e) => arrangeEmployees(employees, e)} setClonedEmployess={setClonedEmployess} >
+              <option value="" selected disabled hidden > Date Modified </option>
+              <option value="ASC" > A to Z </option>
+              <option value="DESC" > Z to A </option>
             </select>
           </div>
           <div>
