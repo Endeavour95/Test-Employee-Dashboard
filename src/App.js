@@ -2,69 +2,108 @@ import './App.css';
 import { useState } from 'react';
 
 function DisplayEmployeeDetails(props) {
-  const labels = ["Employee Id : ", "First Name : ", "Last Name : ", "Salary : ", "Designation : ", "Department : "]
+  const labels = ["Full Name : ", "Salary : ", "Designation : ", "Department : "]
+
+
+
+  const [selectedDepartment, setSelectedDepartment] = useState(props.selectedEmployee.empDept)
+
+  const [newEmp, setnewEmp] = useState(props.selectedEmployee)
+
+  function handleOnChange(val, property) {
+    let emp = {...newEmp}
+    emp[property] = val
+    setnewEmp(emp)
+    console.log("handleOnChange", emp)
+  }
+
+
   return (
     <table id="details">
       <tbody>
         {
-          Object.keys(props.employee).map((key, index) => {
-            if (key !== "") {
-              if (key === "empId") {
-                return (
-                  <tr key={index}>
-                    <td>
-                      <label>{labels[index]}</label>
-                    </td>
-                    <td>
-                      <input type="text" style={{ cursor: 'no-drop' }} value={props.employee[key]} disabled />
-                    </td>
-                  </tr>
-                )
-              } else if (key === "empDept") {
-                return (
-                  <tr key={index}>
-                    <td>
-                      <label>{labels[index]}</label>
-                    </td>
-                    <td>
-                      <select id="myList" style={props.editFlag ? { cursor: 'no-drop' } : { cursor: 'pointer' }} value={props.employee.empDept} disabled={props.editFlag}>
-                        {
-                          props.departments.map((department) => {
-                            return (
-                              <option key={department.deptId} value={department.deptId} >{department.deptName}</option>
-                            )
-                          })
-                        }
-                      </select>
-                    </td>
-                  </tr>
-                )
-              } else {
-                return (
-                  <tr key={index}>
-                    <td>
-                      <label>{labels[index]}</label>
-                    </td>
-                    <td>
-                      <input type="text" value={props.employee[key]} style={props.editFlag ? { cursor: 'no-drop' } : { cursor: 'pointer' }} disabled={props.editFlag} />
-                    </td>
-                  </tr>
-                )
-              }
+          Object.keys(props.selectedEmployee).map((property, index) => {
+            if (property === "empId") {
+              // return (
+              //   <tr key={index}>
+              //     <td>
+              //       <label>{labels[index]}</label>
+              //     </td>
+              //     <td>
+              //       <input type="text" style={{ cursor: 'no-drop' }} value={props.selectedEmployee[property]} disabled />
+              //     </td>
+              //   </tr>
+              // )
+            } else if (property === "empDept") {
+              return (
+                <tr key={index}>
+                  <td>
+                    <label>{labels[index - 1]}</label>
+                  </td>
+                  <td>
+                    <select id="myList" onChange={(e) => {
+                      setSelectedDepartment(e.target.value)
+                      handleOnChange(selectedDepartment, property)
+                      }} style={props.editFlag ? { cursor: 'no-drop' } : { cursor: 'pointer' }} value={props.selectedEmployee.empDept} disabled={props.editFlag}>
+                      {
+                        props.departments.map((department) => {
+                          return (
+                            <option key={department.deptId} value={department.deptId} >{department.deptName}</option>
+                          )
+                        })
+                      }
+                    </select>
+                  </td>
+                </tr>
+              )
+            } else {
+              return (
+                <tr key={index}>
+                  <td>
+                    <label>{labels[index - 1]}</label>
+                  </td>
+                  <td>
+                    <input type="text" onChange={(e)=> {handleOnChange(e.target.value, property)}} value={props.selectedEmployee[property]} style={props.editFlag ? { cursor: 'no-drop' } : { cursor: 'pointer' }} disabled={props.editFlag} />
+                  </td>
+                </tr>
+              )
             }
           })
         }
         <tr>
           <td>
-            <button onClick={() => { props.seteditFlag(false) }} >Edit</button>
+            <button onClick={() => { props.seteditFlag(false); editEmployee(newEmp, props.employees, props.setEmployess, props.setSelectedEmployee, props.seteditFlag) }} >Edit</button>
           </td>
           <td>
-            <button >Delete</button>
+            <button onClick={() => {deleteEmployee(props.selectedEmployee, props.setSelectedEmployee, props.employees, props.setEmployess)}}>Delete</button>
           </td>
         </tr>
       </tbody>
     </table>
   )
+}
+
+function editEmployee(employee, employees, setEmployess, setSelectedEmployee, seteditFlag) {
+  console.log("editEmployee", employee)
+
+
+  // const index = employees.findIndex(emp => emp.empId === employee.empId);
+  
+  // const updatedEmployees = [...employees];
+  
+  // updatedEmployees[index] = employee;
+
+  // setEmployess(updatedEmployees);
+
+  // setSelectedEmployee('');
+  // seteditFlag(true);
+}
+
+function deleteEmployee(selectedEmployee, setSelectedEmployee, employees, setEmployess) {
+  alert("You want to delete the employee")
+  const updatedEmployees = employees.filter(employee => employee.empId !== selectedEmployee.empId);
+  setEmployess(updatedEmployees);
+  setSelectedEmployee('');
 }
 
 function EmployeeRegistrationForm(props) {
@@ -135,7 +174,7 @@ function EmployeeRegistrationForm(props) {
         <tr>
           <td>
             <button onClick={() => {
-              props.setEmployess([ ...props.employees, newEmp, ])
+              props.setEmployess([...props.employees, newEmp,])
             }}>Submit</button>
           </td>
           <td>
@@ -147,6 +186,39 @@ function EmployeeRegistrationForm(props) {
   )
 }
 
+
+// const List = (props) => {
+//   const [dummyEmployees, setdummyEmployees] = useState(props.employees)
+
+//   if (props.sortOrder) {
+//     if (props.sortOrder === "DESC") {
+//       setdummyEmployees(dummyEmployees.sort((a, b) => b.empName.localeCompare(a.empName)))
+//     }
+//     if (props.sortOrder === "ASC") {
+//       setdummyEmployees(dummyEmployees.sort((a, b) => a.empName.localeCompare(b.empName)))
+//     }
+//   }
+
+//   if (props.searchText) {
+//     setdummyEmployees(props.employees.filter(employee =>
+//       employee.empName.toLowerCase().includes(props.searchText.toLowerCase())
+//     ))
+//   }
+
+//   return (
+//     <tbody>
+//       {
+//         dummyEmployees.map((employee, index) => {
+//           return (
+//             <tr key={index}><td><input type="button" style={props.selectedEmployee.empId === employee.empId ? { backgroundColor: "yellowgreen" } : { backgroundColor: "#4caf50" }}
+//               value={employee.empName}
+//               onClick={() => { props.setSelectedEmployee(employee) }} ></input></td></tr>
+//           )
+//         })
+//       }
+//     </tbody>
+//   )
+// }
 
 const List = (props) => {
   let dummyEmployees = [...props.employees]
@@ -267,7 +339,8 @@ const EmployeesDashboard = () => {
   const [selectedDepartment, setSelectedDepartment] = useState('')
 
   const [editFlag, seteditFlag] = useState(selectedEmployee ? false : true)
-  // const [editflag, setEditflag] = useState(false)
+  // const [editFlag, seteditFlag] = useState(false)
+  // const [editFlag, seteditFlag] = useState(true)
 
   const [clickedButton, setclickedButton] = useState('')
 
@@ -302,7 +375,7 @@ const EmployeesDashboard = () => {
             <h3>Employee Details</h3>
           </div>
           <div id="view">{
-            selectedEmployee ? <DisplayEmployeeDetails employee={selectedEmployee} departments={departments} editFlag={editFlag} seteditFlag={seteditFlag} /> : <p>Please select an employee to view details.</p>
+            selectedEmployee ? <DisplayEmployeeDetails employees={employees} setEmployess={setEmployess} selectedEmployee={selectedEmployee} setSelectedEmployee={setSelectedEmployee} departments={departments} editFlag={editFlag} seteditFlag={seteditFlag} /> : <p>Please select an employee to view details.</p>
           }
           </div>
 
