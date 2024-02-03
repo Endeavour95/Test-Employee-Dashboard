@@ -3,40 +3,128 @@ import { useState } from "react";
 function EmployeeRegistrationForm(props) {
     const labels = ["Full Name : ", "Salary : ", "Designation : ", "Department : "]
     const properties = ["empName", "empSalary", "empDesignation", "empDept"]
-
+    
+    const [employeeName, setEmployeeName] = useState('')
+    
+    const [employeeSalary, setEmployeeSalary] = useState('')
+    
+    const [employeeDesignation, setEmployeeDesignation] = useState('')
+    
     const [selectedDepartment, setSelectedDepartment] = useState('')
-
-    // function validate(e, property) {
-    //   switch (property) {
-    //     case "empName":
-            
-    //       break;
-    //     case "empSalary":
-
-    //       break;
-
-    //     case "empDesignation":
-
-    //       break;
-
-    //     default:
-    //       break;
-    //   }
-    // }
-
-
-    const [newEmp, setnewEmp] = useState({
-      "empId": Number(props.employees[props.employees.length - 1].empId) + 1
+    
+    const employeeInfo = [employeeName, employeeSalary, employeeDesignation, selectedDepartment]
+    
+    const [employeeToRegisterFlag, setEmployeeToRegisterFlag] = useState(false)
+    
+    const [employeeToRegister, setEmployeeToRegister] = useState({
+        empId: Number(props.employees[props.employees.length - 1].empId) + 1,
+        empName: '',
+        empSalary: '',
+        empDesignation: '',
+        empDept: ''
     })
 
-    function handleOnChange(e, property) {
-      setnewEmp((prevEmp) => {
-        return {
-          ...prevEmp,
-          [property]: e.target.value,
-        };
-      });
+    function createEmployeeToRegister(property, inputData) {
+        setEmployeeToRegister((prevEmp) => {
+            return {
+                ...prevEmp,
+                [property]: inputData,
+            };
+        });
     }
+
+
+    function handleOnChange(property, dataToValidate) {
+        switch (property) {
+            case "empName":
+                
+                setEmployeeName(dataToValidate)
+
+                // if (/^[A-Za-z\s]+$/.test(dataToValidate) || /^[A-Z][a-z]*(?:\s[A-Z][a-z]*)*$/.test(dataToValidate)) {
+                //     // Split the input into individual words
+                //     const words = dataToValidate.trim().split(/\s+/);
+
+                //     // Capitalize the first letter of each word
+                //     const formattedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+
+                //     // Join the words back together with a space between them
+                //     const formattedFullName = formattedWords.join(' ');
+
+                //     console.log("formattedFullName", formattedFullName);
+
+                //     setEmployeeName(formattedFullName);
+                // } else if (/^\s+/.test(dataToValidate)) {
+                //     setEmployeeName('')
+                // } else {
+
+                // }
+
+
+
+
+                // if (/[A-Za-z]$/.test(dataToValidate) || /^[A-Z][a-z]+(?:\s[A-Z][a-z]+)+$/.test(dataToValidate)) {
+                //     // Split the input into individual words
+                //     const words = dataToValidate.trim().split(/\s+/);
+
+                //     // Capitalize the first letter of each word
+                //     const formattedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+
+                //     // Join the words back together with a space between them
+                //     const formattedFullName = formattedWords.join(' ');
+
+                //     console.log("formattedFullName", formattedFullName);
+
+                //     setEmployeeName(formattedFullName)
+
+                //     createEmployeeToRegister(property, employeeName)
+                // } else if (/^[\s+/]/.test(dataToValidate)) {
+
+                // } else {
+                //     alert("Only alphabets are allowed")
+                // }
+                break;
+            case "empSalary":
+                if (Number(dataToValidate) && Number(dataToValidate) === 0) {
+
+                } else if (Number(dataToValidate)) {
+                    setEmployeeSalary(dataToValidate)
+                } else if (dataToValidate[0] === '' && dataToValidate.length < 1) {
+                    setEmployeeSalary(dataToValidate)
+                }
+                break;
+            case "empDesignation":
+                setEmployeeDesignation(dataToValidate)
+                break;
+            default:
+                createEmployeeToRegister(property, dataToValidate)
+                setSelectedDepartment(dataToValidate)
+                break;
+        }
+    }
+
+
+    function handleOnBlur(property, filteredDataToValidate) {
+        switch (property) {
+            case "empName":
+                // setEmployeeName(filteredDataToValidate)
+                createEmployeeToRegister(property, employeeName)
+                break;
+            case "empSalary":
+                if (filteredDataToValidate.length > 0 && filteredDataToValidate.length < 5) {
+                    alert("Salary should be at least 5 figures")
+                    // setEmployeeSalary(filteredDataToValidate)
+                } else {
+                    createEmployeeToRegister(property, employeeSalary)
+                }
+                break;
+            case "empDesignation":
+                // setEmployeeDesignation(filteredDataToValidate)
+                createEmployeeToRegister(property, employeeDesignation)
+            default:
+                break;
+        }
+    }
+
 
     return (
         <>
@@ -54,16 +142,27 @@ function EmployeeRegistrationForm(props) {
                                             <label>{labels[index]}</label>
                                         </td>
                                         <td>
-                                            <select id="myList" onChange={(e) => {
-                                                handleOnChange(e, property)
-                                                setSelectedDepartment(e.target.value)
-                                            }}
-                                                style={{ cursor: 'pointer' }} value={selectedDepartment} required>
-                                                <option value="" disabled hidden>Select Department</option>
+                                            <select id="myList"
+                                                disabled={employeeToRegisterFlag}
+                                                onChange={(e) => {
+                                                    handleOnChange(property, e.target.value)
+                                                    // createEmployeeToRegister(property, e.target.value)
+                                                    // setSelectedDepartment(e.target.value)
+                                                }}
+                                                // style={{ cursor: 'pointer' }}
+                                                style={employeeToRegisterFlag ? { cursor: 'no-drop' } : { cursor: 'pointer' }}
+                                                value={employeeInfo[index]}
+                                            >
+                                                <option value="" hidden>Select Department</option>
                                                 {
                                                     props.departments.map((department) => {
                                                         return (
-                                                            <option key={department.deptId} value={department.deptId} >{department.deptName}</option>
+                                                            <option
+                                                                key={department.deptId}
+                                                                value={department.deptId}
+                                                            >
+                                                                {department.deptName}
+                                                            </option>
                                                         )
                                                     })
                                                 }
@@ -80,10 +179,17 @@ function EmployeeRegistrationForm(props) {
                                         <td>
                                             <input
                                                 type="text"
+                                                disabled={employeeToRegisterFlag}
+                                                value={employeeInfo[index]}
                                                 onChange={(e) => {
-                                                    handleOnChange(e, property)
+                                                    console.log("oncjjafd", e.target.value)
+                                                    handleOnChange(property, e.target.value.trimStart())
                                                 }}
-                                                style={{ cursor: 'pointer' }} required
+                                                onBlur={(e) => {
+                                                    handleOnBlur(property, employeeInfo[index].trimEnd())
+                                                }}
+                                                // style={{ cursor: 'pointer' }}
+                                                style={employeeToRegisterFlag ? { cursor: 'no-drop' } : { cursor: 'pointer' }}
                                             />
                                         </td>
                                     </tr>
@@ -91,28 +197,113 @@ function EmployeeRegistrationForm(props) {
                             }
                         })
                     }
-                    <tr>
+                    {/* <tr>
                         <td>
                             <button onClick={() => {
-                                props.setEmployess([...props.employees, newEmp])
-                                if (props.employees.findIndex(emp => emp.empId === newEmp.empId)) {
-                                    setnewEmp({})
-                                    props.homeButton() 
+                                props.setEmployess([...props.employees, employeeToRegister])
+                                if (props.employees.findIndex(emp => emp.empId === employeeToRegister.empId)) {
+                                    setEmployeeToRegister({})
+                                    props.homeButton()
                                     alert("Employee Registered successfully");
                                 }
                             }}>Submit</button>
                         </td>
                         <td>
                             <button onClick={() => {
-                                setnewEmp({})
+                                setEmployeeToRegister({})
                                 props.homeButton()
                             }} >Cancel</button>
                         </td>
-                    </tr>
+                    </tr> */}
+                    {
+                        employeeToRegisterFlag ?
+                            <tr>
+                                <td>
+                                    <button onClick={() => {
+                                        props.setEmployess([...props.employees, employeeToRegister])
+                                        if (props.employees.findIndex(emp => emp.empId === employeeToRegister.empId)) {
+                                            setEmployeeToRegister({})
+                                            props.homeButton()
+                                            alert("Employee Registered successfully");
+                                        }
+                                    }}>Confirm</button>
+                                    <button onClick={() => {
+                                        setEmployeeToRegisterFlag(false)
+                                    }}>Edit</button>
+                                </td>
+                                <td>
+                                    <button onClick={() => {
+                                        setEmployeeToRegister({})
+                                        props.homeButton()
+                                        setEmployeeToRegisterFlag(false)
+                                    }} >Cancel</button>
+                                </td>
+                            </tr>
+                            :
+                            <tr>
+                                <td>
+                                    <button onClick={() => {
+                                        if (Object.values(employeeToRegister).includes('')) {
+                                            alert("All fields required")
+                                        } else {
+                                            setEmployeeToRegisterFlag(true)
+                                        }
+                                    }}>Submit</button>
+                                </td>
+                                <td>
+                                    <button onClick={() => {
+                                        setEmployeeToRegister({})
+                                        props.homeButton()
+                                        setEmployeeToRegisterFlag(false)
+                                    }} >Cancel</button>
+                                </td>
+                            </tr>
+                    }
                 </tbody>
             </table>
         </>
     )
 }
+
+
+
+// employeeToRegisterFlag ?
+//     <tr>
+//         <td>
+//             <button onClick={() => {
+//                 props.setEmployess([...props.employees, employeeToRegister])
+//                 if (props.employees.findIndex(emp => emp.empId === employeeToRegister.empId)) {
+//                     setEmployeeToRegister({})
+//                     props.homeButton()
+//                     alert("Employee Registered successfully");
+//                 }
+//             }}>Confirm</button>
+//             <button onClick={() => {
+//                 setEmployeeToRegisterFlag(true)
+//             }}>Edit</button>
+//         </td>
+//         <td>
+//             <button onClick={() => {
+//                 setEmployeeToRegister({})
+//                 props.homeButton()
+//                 setEmployeeToRegisterFlag(false)
+//             }} >Cancel</button>
+//         </td>
+//     </tr>
+//     :
+//     <tr>
+//         <td>
+//             <button onClick={() => {
+//                 setEmployeeToRegisterFlag(true)
+//             }}>Submit</button>
+//         </td>
+//         <td>
+//             <button onClick={() => {
+//                 setEmployeeToRegister({})
+//                 props.homeButton()
+//                 setEmployeeToRegisterFlag(false)
+//             }} >Cancel</button>
+//         </td>
+//     </tr>
 
 export default EmployeeRegistrationForm;

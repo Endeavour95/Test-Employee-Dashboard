@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import DisplayAndEditButtons from './DisplayAndEditButtons';
 
 function DisplayEmployeeDetails(props) {
     const labels = ["Full Name : ", "Salary : ", "Designation : ", "Department : "]
 
-    const [newEmp, setnewEmp] = useState(props.selectedEmployee)
+    const [employeeToEdit, setEmployeeToEdit] = useState(props.selectedEmployee)
+
+    const [delEmpFlag, setDelEmpFlag] = useState(false)
 
     function handleOnChange(e, property) {
-        setnewEmp((prevEmp) => {
+        setEmployeeToEdit((prevEmp) => {
             return {
                 ...prevEmp,
                 [property]: e.target.value,
@@ -22,7 +25,7 @@ function DisplayEmployeeDetails(props) {
             <table id="details">
                 <tbody>
                     {
-                        Object.keys(newEmp).map((property, index) => {
+                        Object.keys(employeeToEdit).map((property, index) => {
                             if (property === "empId") {
                                 return (
                                     <tr key={property}>
@@ -33,7 +36,7 @@ function DisplayEmployeeDetails(props) {
                                             <input
                                                 type="text"
                                                 style={{ cursor: 'no-drop' }}
-                                                value={newEmp[property]} disabled
+                                                value={employeeToEdit[property]} disabled
                                             />
                                         </td>
                                     </tr>
@@ -51,7 +54,7 @@ function DisplayEmployeeDetails(props) {
                                                     handleOnChange(e, property)
                                                 }}
                                                 style={props.editFlag ? { cursor: 'pointer' } : { cursor: 'no-drop' }}
-                                                value={newEmp.empDept} disabled={props.editFlag === false}
+                                                value={employeeToEdit.empDept} disabled={props.editFlag === false}
                                             >
                                                 {
                                                     props.departments.map((department) => {
@@ -76,19 +79,30 @@ function DisplayEmployeeDetails(props) {
                                             <label>{labels[index - 1]}</label>
                                         </td>
                                         <td>
-                                            <input type="text" onChange={(e) => { handleOnChange(e, property) }} value={newEmp[property]} style={props.editFlag ? { cursor: 'pointer' } : { cursor: 'no-drop' }} disabled={props.editFlag === false} />
+                                            <input type="text" onChange={(e) => { handleOnChange(e, property) }} value={employeeToEdit[property]} style={props.editFlag ? { cursor: 'pointer' } : { cursor: 'no-drop' }} disabled={props.editFlag === false} />
                                         </td>
                                     </tr>
                                 )
                             }
                         })
                     }
-                    <tr>
+                    <DisplayAndEditButtons
+                        employeeToEdit={employeeToEdit}
+                        employees={props.employees}
+                        setEmployess={props.setEmployess}
+                        selectedEmployee={props.selectedEmployee}
+                        setSelectedEmployee={props.setSelectedEmployee}
+                        editFlag={props.editFlag}
+                        setEditFlag={props.setEditFlag}
+                        delEmpFlag={delEmpFlag}
+                        setDelEmpFlag={setDelEmpFlag}
+                    />
+                    {/* <tr>
                         <td>
                             <button
                                 onClick={() => {
                                     props.setEditFlag(true);
-                                    editEmployee(newEmp, props.employees, props.setEmployess, props.setSelectedEmployee, props.setEditFlag)
+                                    editEmployee(employeeToEdit, props.employees, props.setEmployess, props.setSelectedEmployee, props.setEditFlag)
                                 }}
                             >
                                 Edit
@@ -101,29 +115,29 @@ function DisplayEmployeeDetails(props) {
                                 Delete
                             </button>
                         </td>
-                    </tr>
+                    </tr> */}
                 </tbody>
             </table>
         </>
     )
 }
 
-function editEmployee(employee, employees, setEmployess, setSelectedEmployee, setEditFlag) {
-    const index = employees.findIndex(emp => emp.empId === employee.empId);
+// function editEmployee(employee, employees, setEmployess, setSelectedEmployee, setEditFlag) {
+//     const index = employees.findIndex(emp => emp.empId === employee.empId);
 
-    const updatedEmployees = [...employees];
+//     const updatedEmployees = [...employees];
 
-    updatedEmployees[index] = employee;
+//     updatedEmployees[index] = employee;
 
-    setEmployess(updatedEmployees);
-    // return false
-}
+//     setEmployess(updatedEmployees);
+//     // return false
+// }
 
-function deleteEmployee(selectedEmployee, setSelectedEmployee, employees, setEmployess) {
-    alert("You want to delete the employee")
-    const updatedEmployees = employees.filter(employee => employee.empId !== selectedEmployee.empId);
-    setEmployess(updatedEmployees);
-    setSelectedEmployee({});
-}
+// function deleteEmployee(selectedEmployee, setSelectedEmployee, employees, setEmployess) {
+//     alert("You want to delete the employee")
+//     const updatedEmployees = employees.filter(employee => employee.empId !== selectedEmployee.empId);
+//     setEmployess(updatedEmployees);
+//     setSelectedEmployee({});
+// }
 
 export default DisplayEmployeeDetails;

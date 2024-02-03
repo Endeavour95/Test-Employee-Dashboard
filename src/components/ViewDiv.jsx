@@ -69,7 +69,6 @@ const ViewDiv = (props) => {
                         <p>Please select an employee to view details.</p> :
                         (props.addEmpFlag === true) ?
                             (() => {
-                                // setSelectedEmployee({})
                                 return (
                                     <EmployeeRegistrationForm
                                         employees={props.employees}

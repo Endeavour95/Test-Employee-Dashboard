@@ -35,20 +35,26 @@ const List = (props) => {
     return (
         <tbody>
             {
-                employees.map((employee, index) => {
-                    return (
-                        <tr key={index}><td><input type="button" style={props.selectedEmployee.empId === employee.empId ? { backgroundColor: "green" } : { backgroundColor: "#4caf50" }}
-                            value={employee.empName}
-                            onClick={() => {
-                                if (props.addEmpFlag === true) {
-                                    alert("Please cancel button or submit the employess details")
-                                //   props.setAddEmpFlag(false)
-                                } else {
-                                    props.setSelectedEmployee(employee)
-                                }
-                            }} ></input></td></tr>
-                    )
-                })
+                employees.length > 0 ?
+                    employees.map((employee, index) => {
+                        return (
+                            <tr key={index}><td><input type="button" style={props.selectedEmployee.empId === employee.empId ? { backgroundColor: "green" } : { backgroundColor: "#4caf50" }}
+                                value={employee.empName}
+                                onClick={() => {
+                                    if (props.addEmpFlag === true) {
+                                        alert("Please cancel button or submit the employess details")
+                                        //   props.setAddEmpFlag(false)
+                                    } else {
+                                        props.setSelectedEmployee(employee)
+                                    }
+                                }} ></input></td></tr>
+                        )
+                    }) :
+                    <tr>
+                        <td>
+                            <p>No Employee found</p>
+                        </td>
+                    </tr>
             }
         </tbody>
     )
