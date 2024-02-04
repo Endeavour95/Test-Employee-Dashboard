@@ -8,7 +8,7 @@ const DisplayAndEditButtons = (props) => {
                             <td>
                                 <button
                                     onClick={() => {
-                                        editEmployee(props.employeeToEdit, props.employees, props.setEmployess, props.setSelectedEmployee, props.setEditFlag)
+                                        editEmployee(props.employees, props.setEmployess, props.selectedEmployee, props.setSelectedEmployee, props.setEditFlag)
                                     }}
                                 >
                                     Save
@@ -31,7 +31,7 @@ const DisplayAndEditButtons = (props) => {
                                 <td>
                                     <button
                                         onClick={() => {
-                                            deleteEmployee(props.selectedEmployee, props.setSelectedEmployee, props.employees, props.setEmployess, props.setDelEmpFlag)
+                                            deleteEmployee(props.employees, props.setEmployess, props.selectedEmployee, props.setSelectedEmployee, props.setDelEmpFlag)
                                         }}
                                     >
                                         Confirm
@@ -76,12 +76,12 @@ const DisplayAndEditButtons = (props) => {
     )
 }
 
-function editEmployee(employee, employees, setEmployess, setSelectedEmployee, setEditFlag) {
-    const index = employees.findIndex(emp => emp.empId === employee.empId);
+function editEmployee(employees, setEmployess, selectedEmployee, setSelectedEmployee, setEditFlag) {
+    const index = employees.findIndex(emp => emp.empId === selectedEmployee.empId);
 
     const updatedEmployees = [...employees];
 
-    updatedEmployees[index] = employee;
+    updatedEmployees[index] = selectedEmployee;
     
     setEmployess(updatedEmployees);
     
@@ -90,51 +90,11 @@ function editEmployee(employee, employees, setEmployess, setSelectedEmployee, se
     setEditFlag(false)
 }
 
-function deleteEmployee(selectedEmployee, setSelectedEmployee, employees, setEmployess, setDelEmpFlag) {
+function deleteEmployee(employees, setEmployess, selectedEmployee, setSelectedEmployee, setDelEmpFlag) {
     const updatedEmployees = employees.filter(employee => employee.empId !== selectedEmployee.empId);
     setEmployess(updatedEmployees);
     setSelectedEmployee({});
     setDelEmpFlag(false)
 }
-
-// function editEmployee(employee, employees, setEmployess, setSelectedEmployee, setEditFlag) {
-//     const index = employees.findIndex(emp => emp.empId === employee.empId);
-
-//     const updatedEmployees = [...employees];
-
-//     updatedEmployees[index] = employee;
-
-//     setEmployess(updatedEmployees);
-// }
-
-// function deleteEmployee(selectedEmployee, setSelectedEmployee, employees, setEmployess) {
-//     const updatedEmployees = employees.filter(employee => employee.empId !== selectedEmployee.empId);
-//     setEmployess(updatedEmployees);
-//     setSelectedEmployee({});
-// }
-
-// const DisplayAndEditButtons = (props) => {
-//     return (
-//         <tr>
-//             <td>
-//                 <button
-//                     onClick={() => {
-//                         props.setEditFlag(true);
-//                         editEmployee(props.employeeToEdit, props.employees, props.setEmployess, props.setSelectedEmployee, props.setEditFlag)
-//                     }}
-//                 >
-//                     Update
-//                 </button>
-//             </td>
-//             <td>
-//                 <button
-//                     onClick={() => { deleteEmployee(props.selectedEmployee, props.setSelectedEmployee, props.employees, props.setEmployess) }}
-//                 >
-//                     Delete
-//                 </button>
-//             </td>
-//         </tr>
-//     )
-// }
 
 export default DisplayAndEditButtons;

@@ -1,13 +1,16 @@
 
 const Search = (props) => {
     return (
-        <input placeholder='🔎︎ Search ...' onInput={(e) => { props.setSearchText(e.target.value) }} />
+        <input placeholder='🔎︎ Search ...' value={props.searchText}
+            onInput={(e) => { props.setSearchText(e.target.value) }}
+        />
     )
 }
 
 const Sort = (props) => {
     return (
-        <select id="myList" value={props.sortOrder} onChange={(e) => { props.setSortOrder(e.target.value) }} >
+        <select id="myList" value={props.sortOrder}
+            onChange={(e) => { props.setSortOrder(e.target.value) }} >
             <option value="" > Date Modified </option>
             <option value="ASC" > A to Z </option>
             <option value="DESC" > Z to A </option>
@@ -18,8 +21,14 @@ const Sort = (props) => {
 const ToolBar = (props) => {
     return (
         <div id='toolbar'>
-            <Search setSearchText={props.setSearchText} />
-            <Sort setSortOrder={props.setSortOrder} sortOrder={props.sortOrder} />
+            <Search
+                searchText={props.searchText}
+                setSearchText={props.setSearchText}
+            />
+            <Sort
+                sortOrder={props.sortOrder}
+                setSortOrder={props.setSortOrder}
+            />
         </div>
     )
 }

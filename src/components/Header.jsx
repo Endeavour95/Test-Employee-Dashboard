@@ -1,16 +1,59 @@
-import NavBar from "./NavBar";
+function addEmployeeButtonHandler(selectedEmployee, setSelectedEmployee, setAddEmpFlag) {
+    if (Object.keys(selectedEmployee).length === 0) {
+        setAddEmpFlag(true)
+    } else {
+        setSelectedEmployee({})
+        setAddEmpFlag(true)
+    }
+}
+
 
 const Header = (props) => {
     return (
         <div id="navdiv">
-            <NavBar 
-            names={[{ val: "Home", func: props.homeButton }, { val: "Add Employee", func: "" }]} 
-            setAddEmpFlag={props.setAddEmpFlag}
-            selectedEmployee={props.selectedEmployee}
-            setSelectedEmployee={props.setSelectedEmployee}
-            />
-        </div>
+            <nav>
+                <input
+                    type="button" value="Home"
+                    onClick={() => props.homeButton(true)}
+                />
+                <input
+                    type="button" value="Add Employee"
+                    onClick={() => addEmployeeButtonHandler(props.selectedEmployee, props.setSelectedEmployee, props.setAddEmpFlag)}
+                />
+                <button value={props.employees.length}
+                    style={{
+                        fontFamily: "cursive", border: 'none', borderRadius: '15px',
+                        width: 'fit-content', height: '4vh',
+                        float: 'right', margin: '3px 5px 3px 0px',
+                        boxShadow: '0 0 10px rgb(98, 96, 96)'
+                    }}>{props.employees.length + " Employees Registered"}</button>
+        </nav>
+        </div >
     )
 }
+
+
+
+
+
+
+
+
+
+// import NavBar from "./NavBar";
+
+// const Header = (props) => {
+//     return (
+//         <div id="navdiv">
+//             <NavBar 
+//             names={[{ val: "Home", func: props.homeButton }, { val: "Add Employee", func: "" }]} 
+//             employees={props.employees}
+//             setAddEmpFlag={props.setAddEmpFlag}
+//             selectedEmployee={props.selectedEmployee}
+//             setSelectedEmployee={props.setSelectedEmployee}
+//             />
+//         </div>
+//     )
+// }
 
 export default Header;

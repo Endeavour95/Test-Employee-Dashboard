@@ -5,21 +5,69 @@ import EmployeesList from './EmployeesList';
 import Header from './Header';
 import ViewDiv from './ViewDiv';
 
+
 const EmployeesDashboard = () => {
     const [departments, setDepartments] = useState([
         {
             deptId: 1,
-            deptName: "IT"
+            deptName: "Information Technology"
         },
         {
             deptId: 2,
-            deptName: "HR"
+            deptName: "Human Resources"
         },
         {
             deptId: 3,
             deptName: "Engineering"
+        },
+        {
+            deptId: 4,
+            deptName: "Quality Assurance"
+        },
+        {
+            deptId: 5,
+            deptName: "Finance and Accounting"
         }
     ])
+
+    // const departments = [
+    //     {
+    //         deptId: 1,
+    //         deptName: "Information Technology",
+    //         designations: [
+    //             {
+    //                 designationId: 1,
+    //                 designation: "Chief Technology Officer"
+    //             },
+    //             {
+    //                 designationId: 2,
+    //                 designation: "System Administrator"
+    //             },
+    //             {
+    //                 designationId: 3,
+    //                 designation: "Network Administrator"
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         deptId: 2,
+    //         deptName: "Human Resources",
+    //         designations: [
+    //             {
+    //                 designationId: 1,
+    //                 designation: "HR Director"
+    //             },
+    //             {
+    //                 designationId: 2,
+    //                 designation: "HR Manager"
+    //             },
+    //             {
+    //                 designationId: 3,
+    //                 designation: "Talent Acquisition Manager"
+    //             }
+    //         ]
+    //     }
+    // ]
 
     const [employees, setEmployess] = useState([
         {
@@ -56,12 +104,27 @@ const EmployeesDashboard = () => {
 
     const [addEmpFlag, setAddEmpFlag] = useState(false)
 
-    // const [editFlag, setEditFlag] = useState(Object.keys(selectedEmployee).length === 0 ? false : true)
     const [editFlag, setEditFlag] = useState(false)
 
     const [searchText, setSearchText] = useState('')
 
     const [sortOrder, setSortOrder] = useState('')
+
+    const [employeeToRegister, setEmployeeToRegister] = useState({
+        empId: Number(employees[employees.length - 1].empId) + 1,
+        empName: '',
+        empSalary: '',
+        empDesignation: '',
+        empDept: ''
+    })
+
+    function addEmployeeAndSelectEmployeeHandler() {
+        if (employeeToRegister.empName === '' && employeeToRegister.empSalary === '') {
+            return true
+        } else {
+            return false
+        }
+    }
 
     function homeButton() {
         setSelectedEmployee({})
@@ -74,6 +137,7 @@ const EmployeesDashboard = () => {
     return (
         <>
             <Header
+                employees={employees}
                 homeButton={homeButton}
                 setAddEmpFlag={setAddEmpFlag}
                 selectedEmployee={selectedEmployee}
@@ -82,9 +146,10 @@ const EmployeesDashboard = () => {
             <div id="downdiv">
                 <div id="left">
                     <ToolBar
+                        searchText={searchText}
                         setSearchText={setSearchText}
-                        setSortOrder={setSortOrder}
                         sortOrder={sortOrder}
+                        setSortOrder={setSortOrder}
                     />
                     <EmployeesList
                         employees={employees}
@@ -94,6 +159,7 @@ const EmployeesDashboard = () => {
                         setAddEmpFlag={setAddEmpFlag}
                         searchText={searchText}
                         sortOrder={sortOrder}
+                        addEmployeeAndSelectEmployeeHandler={addEmployeeAndSelectEmployeeHandler}
                     />
                 </div>
                 <div id="right">
@@ -103,11 +169,13 @@ const EmployeesDashboard = () => {
                         departments={departments}
                         selectedEmployee={selectedEmployee}
                         setSelectedEmployee={setSelectedEmployee}
-                        homeButton={homeButton}
                         editFlag={editFlag}
                         setEditFlag={setEditFlag}
                         addEmpFlag={addEmpFlag}
                         setAddEmpFlag={setAddEmpFlag}
+                        employeeToRegister={employeeToRegister}
+                        setEmployeeToRegister={setEmployeeToRegister}
+                        homeButton={homeButton}
                     />
                 </div>
             </div>

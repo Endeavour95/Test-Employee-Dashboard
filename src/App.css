@@ -35,8 +35,8 @@ nav input[type="button"], tr td button {
   margin: 5px 5px 5px 5px;;
 }
 
-input[type="button"]:hover {
-  background-color: #45a049;
+nav input[type="button"]:hover {
+  background-color: #45a010;
 }
 
 /* Main lower div */
@@ -88,10 +88,14 @@ td input[type="button"] {
   border-radius: 5px;
   background-color: #4caf50;
   color: #fff;
-  width: 17vw;
+  width: 12vw;
   height: 4vh;
   border-radius: 20px;
   margin: 3px 0px 3px 0px;
+}
+
+td input[type="button"]:hover {
+  background-color: "green";
 }
 
 #left {
@@ -108,17 +112,6 @@ div[id="view"] {
   justify-content: center;
   width:'100%';
   /* align-items: center; */
-}
-
-/* Registration page css */
-form {
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 25%;
-  height: 70vh;
-  align-items: center;
 }
 
 select#myDropdown {
@@ -157,15 +150,6 @@ td input[type="text"] {
   font-size: 14px;
 }
 
-form button {
-  background-color: #3b3636e2;
-  color: white;
-  padding: 7px 20px;
-  border: none;
-  border-radius: 16px;
-  cursor: pointer;
-}
-
 select {
   color: rgb(136, 136, 141);
   padding: 5px 15px;
@@ -175,22 +159,3 @@ select {
   border: 1px solid #ccc;
 }
 
-#heading {
-  text-align: center;
-}
-
-#can {
-  float: inline-end;
-}
-
-button:hover {
-  background-color: #609f64;
-}
-
-#can:hover {
-  background-color: #089a00;
-}
-
-#sub:hover {
-  background-color: #b13232c5;
-}
