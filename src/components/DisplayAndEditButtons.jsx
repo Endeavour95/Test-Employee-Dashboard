@@ -1,4 +1,10 @@
+import { useEffect } from "react";
+
 const DisplayAndEditButtons = (props) => {
+    useEffect(() => {
+        console.log('Edit flag or selected employee changed:', props.editFlag, props.selectedEmployee);
+    }, [props.editFlag, props.selectedEmployee]);
+
     return (
         <>
             {
