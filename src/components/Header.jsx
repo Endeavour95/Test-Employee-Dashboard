@@ -7,7 +7,6 @@ function addEmployeeButtonHandler(selectedEmployee, setSelectedEmployee, setAddE
     }
 }
 
-
 const Header = (props) => {
     return (
         <div id="navdiv">
@@ -25,7 +24,6 @@ const Header = (props) => {
                         fontFamily: "cursive", border: 'none', borderRadius: '15px',
                         width: 'fit-content', height: '4vh',
                         float: 'right', margin: '3px 5px 3px 0px',
-                        boxShadow: '0 0 10px rgb(98, 96, 96)'
                     }}>{props.employees.length + " Employees Registered"}</button>
         </nav>
         </div >

@@ -1,10 +1,4 @@
-import { useEffect } from "react";
-
 const DisplayAndEditButtons = (props) => {
-    useEffect(() => {
-        console.log('Edit flag or selected employee changed:', props.editFlag, props.selectedEmployee);
-    }, [props.editFlag, props.selectedEmployee]);
-
     return (
         <>
             {
@@ -91,16 +85,16 @@ function editEmployee(employees, setEmployess, selectedEmployee, setSelectedEmpl
     
     setEmployess(updatedEmployees);
     
-    setSelectedEmployee({})
+    setSelectedEmployee({});
     
-    setEditFlag(false)
+    setEditFlag(false);
 }
 
 function deleteEmployee(employees, setEmployess, selectedEmployee, setSelectedEmployee, setDelEmpFlag) {
     const updatedEmployees = employees.filter(employee => employee.empId !== selectedEmployee.empId);
     setEmployess(updatedEmployees);
     setSelectedEmployee({});
-    setDelEmpFlag(false)
+    setDelEmpFlag(false);
 }
 
 export default DisplayAndEditButtons;
