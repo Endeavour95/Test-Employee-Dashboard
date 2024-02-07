@@ -4,22 +4,32 @@ function EmployeeRegistrationForm(props) {
     const labels = ["Full Name : ", "Salary : ", "Designation : ", "Department : "];
     const properties = ["empName", "empSalary", "empDesignation", "empDept"];
 
-    // const [err, setErr] = useState(false);
+    const [err, setErr] = useState(false);
     const errors = {
-        nameError: "Please enter Name",
-        salaryError: "Salary should be between 5 to 7 figures",
-        designationError: "Please enter Designation",
-        departmentError: "Please select Department"
+        "empName": "Please enter Name",
+        "empSalary": "Salary should be between 5 to 7 figures",
+        "empDesignation": "Please enter Designation",
+        "empDept": "Please select Department"
     };
 
     const [employeeToRegisterFlag, setEmployeeToRegisterFlag] = useState(false);
 
-    const empNameRef = useRef(errors.nameError);
-    const empSalaryRef = useRef(errors.salaryError);
-    const empDesignationRef = useRef(errors.designationError);
-    const empDepartmentRef = useRef(errors.departmentError);
+    // const errRef = useRef(errors)
+    // console.log(errRef.current)
 
-    const employeeRefs = [empNameRef, empSalaryRef, empDesignationRef, empDepartmentRef];
+    // const empNameRef = useRef(errors.empName);
+    // const empSalaryRef = useRef(errors.empSalary);
+    // const empDesignationRef = useRef(errors.empDesignation);
+    // const empDepartmentRef = useRef(errors.empDept);
+
+    // const employeeRefs = [empNameRef, empSalaryRef, empDesignationRef, empDepartmentRef];
+
+    const employeeRefs = {
+        "empName": useRef(""),
+        "empSalary": useRef(""),
+        "empDesignation": useRef(""),
+        "empDept": useRef("")
+    }
 
     // useEffect(() => {
     //     if (props.addEmpFlag) {
@@ -75,11 +85,21 @@ function EmployeeRegistrationForm(props) {
             case "empName":
             case "empDesignation":
                 if (inputData === '') {
-                    // setErr(true);
-                    property === "empName" ?
-                        empNameRef.current.focus()
-                        :
-                        empDesignationRef.current.focus()
+                    // property === "empName" ?
+                    //     empNameRef.current.focus()
+                    //     :
+                    //     empDesignationRef.current.focus()
+                    // property === "empName" ?
+                    //     errRef.current.empName.focus()
+                    //     :
+                    //     errRef.current.empDesignation.focus()
+                    // employeeRefs[property].current.focus()
+                    employeeRefs[property].current.focus()
+                    console.log("employeeRefs[property].current when empty", employeeRefs[property].current)
+                    employeeRefs[property].current = errors[property]
+                    setErr(true);
+                    console.log("employeeRefs[property].current", employeeRefs[property].current)
+                    console.log("errors[property]", errors[property])
                     createEmployeeToRegister(property, inputData);
                 } else {
                     const words = inputData.trim().split(/\s+/);
@@ -91,14 +111,16 @@ function EmployeeRegistrationForm(props) {
                     //     ...prevInfo,
                     //     [property]: formattedName,
                     // }));
-                    // setErr(false);
+                    setErr(false);
                     createEmployeeToRegister(property, formattedName);
                 }
                 break;
             case "empSalary":
                 if (inputData.length > 7 || inputData.length < 5) {
                     // setErr(true);
-                    empSalaryRef.current.focus();
+                    // empSalaryRef.current.focus();
+                    // employeeRefs[property].current.focus()
+                    employeeRefs[property].current = errors[property]
                     createEmployeeToRegister(property, inputData);
                 } else {
                     // setErr(false);
@@ -108,7 +130,9 @@ function EmployeeRegistrationForm(props) {
             default:
                 if (inputData === '') {
                     // setErr(true)
-                    empDepartmentRef.current.focus();
+                    // empDepartmentRef.current.focus();
+                    // employeeRefs[property].current.focus()
+                    employeeRefs[property].current = errors[property]
                     createEmployeeToRegister(property, inputData);
                 } else {
                     // setErr(false);
@@ -127,64 +151,68 @@ function EmployeeRegistrationForm(props) {
                 <tbody>
                     {properties.map((property, index) => {
                         return (
-                            <tr key={index}>
-                                <td>
-                                    <label>{labels[index]}</label>
-                                </td>
-                                <td>{property === "empDept" ?
-                                    <select
-                                        id="myList"
-                                        readOnly={employeeToRegisterFlag}
-                                        onChange={(e) => { handleOnChange(property, e) }}
-                                        onBlur={() => { handleOnBlur(property, props.employeeToRegister[property]) }}
-                                        style={employeeToRegisterFlag ? { cursor: "no-drop" } : { cursor: "pointer" }}
-                                        value={props.employeeToRegister[property]}
-                                        ref={employeeRefs[index]}
-                                    >
-                                        <option value="" hidden>Select Department</option>
-                                        {props.departments.map((department) => {
-                                            return (
-                                                <option key={department.deptId} value={department.deptId}>
-                                                    {department.deptName}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                    :
-                                    <input
-                                        type="text"
-                                        readOnly={employeeToRegisterFlag}
-                                        value={props.employeeToRegister[property]}
-                                        autoFocus={props.addEmpFlag && property === "empName"}
-                                        onChange={(e) => { handleOnChange(property, e) }}
-                                        onBlur={() => { handleOnBlur(property, props.employeeToRegister[property]) }}
-                                        style={employeeToRegisterFlag ? { cursor: "no-drop" } : { cursor: "pointer" }}
+                            <>
+                                <tr key={index}>
+                                    <td>
+                                        <label>{labels[index]}</label>
+                                    </td>
+                                    <td>{property === "empDept" ?
+                                        <select
+                                            id="myList"
+                                            readOnly={employeeToRegisterFlag}
+                                            onChange={(e) => { handleOnChange(property, e) }}
+                                            onBlur={() => { handleOnBlur(property, props.employeeToRegister[property]) }}
+                                            style={employeeToRegisterFlag ? { cursor: "no-drop" } : { cursor: "pointer" }}
+                                            value={props.employeeToRegister[property]}
+                                            // ref={errRef.current[property]}
+                                            ref={employeeRefs[property]}
+                                        >
+                                            <option value="" hidden>Select Department</option>
+                                            {props.departments.map((department) => {
+                                                return (
+                                                    <option key={department.deptId} value={department.deptId}>
+                                                        {department.deptName}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                        :
+                                        <input
+                                            type="text"
+                                            readOnly={employeeToRegisterFlag}
+                                            value={props.employeeToRegister[property]}
+                                            autoFocus={props.addEmpFlag && property === "empName"}
+                                            onChange={(e) => { handleOnChange(property, e) }}
+                                            onBlur={() => { handleOnBlur(property, props.employeeToRegister[property]) }}
+                                            style={employeeToRegisterFlag ? { cursor: "no-drop" } : { cursor: "pointer" }}
+                                            ref={employeeRefs[property]}
                                         // ref={employeeRefs[index]}
-                                        ref={(ref) => {
-                                            if (property === "empName") empNameRef.current = ref;
-                                            if (property === "empSalary") empSalaryRef.current = ref;
-                                            if (property === "empDesignation") empDesignationRef.current = ref;
-                                        }}
-                                    />
-                                }</td>
-                            </tr>
-                            // {
-                            //     err ?
-                            //         <tr key={employeeRefs[index]}>
-                            //             <td></td>
-                            //             <td>
-                            //                 {/* <p style={{ color: "red", fontSize: "12px" }}>{
-                            //                     property === "empName" ? employeeRefs[index].current :
-                            //                         property === "empSalary" ? employeeRefs[index].current :
-                            //                             employeeRefs[index].current
-                            //                 }</p> */}
-                            //                 <p style={{ color: "red", fontSize: "12px" }}>{
-                            //                 employeeRefs[index].current
-                            //             }</p>
-                            //             </td>
-                            //         </tr> :
-                            //         <></>
-                            // }
+                                        // ref={(ref) => {
+                                        //     if (property === "empName") empNameRef.current = ref;
+                                        //     if (property === "empSalary") empSalaryRef.current = ref;
+                                        //     if (property === "empDesignation") empDesignationRef.current = ref;
+                                        // }}
+                                        />
+                                    }</td>
+                                </tr>
+                                {
+                                    err ?
+                                        <tr key={employeeRefs[property]}>
+                                            <td></td>
+                                            <td>
+                                                {/* <p style={{ color: "red", fontSize: "12px" }}>{
+                                                                                property === "empName" ? employeeRefs[index].current :
+                                                                                    property === "empSalary" ? employeeRefs[index].current :
+                                                                                        employeeRefs[index].current
+                                                                            }</p> */}
+                                                <p style={{ color: "red", fontSize: "12px" }}>{
+                                                    employeeRefs[property].current
+                                                }</p>
+                                            </td>
+                                        </tr> :
+                                        <></>
+                                }
+                            </>
                         );
                     })}
                     {employeeToRegisterFlag ?
@@ -250,3 +278,22 @@ function EmployeeRegistrationForm(props) {
 }
 
 export default EmployeeRegistrationForm;
+
+
+// {
+//     err ?
+//         <tr key={employeeRefs[index]}>
+//             <td></td>
+//             <td>
+//                 {/* <p style={{ color: "red", fontSize: "12px" }}>{
+//                                                 property === "empName" ? employeeRefs[index].current :
+//                                                     property === "empSalary" ? employeeRefs[index].current :
+//                                                         employeeRefs[index].current
+//                                             }</p> */}
+//                 <p style={{ color: "red", fontSize: "12px" }}>{
+//                     employeeRefs[index].current
+//                 }</p>
+//             </td>
+//         </tr> :
+//         <></>
+// }
