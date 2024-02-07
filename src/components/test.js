@@ -900,3 +900,169 @@
 // }
 
 // export default EmployeeRegistrationForm;
+
+
+
+
+// /* Index page css */
+// body {
+//     font-family: 'Arial', sans-serif;
+//     background-color: #f4f4f4;
+//     display: grid;
+//     height: fit-content;
+//   }
+  
+//   #root {
+//     width: 100vw;
+//     height: fit-content;
+//     border-radius: 20px;
+//   }
+  
+//   /* Main navbar css */
+//   #navdiv {
+//     width: 100vw;
+//     height: fit-content;
+//     border-radius: 20px;
+//     /* box-shadow: 0 0 10px rgb(98, 96, 96); */
+//   }
+  
+//   nav input[type="button"], tr td button {
+//     cursor: pointer;
+//     font-size: 16px;
+//     font-family: cursive;
+//     border: 1px solid #ccc;
+//     border-radius: 5px;
+//     background-color: #4caf50;
+//     color: #fff;
+//     /* width: 15vw; */
+//     width: fit-content;
+//     height: 4vh;
+//     border-radius: 20px;
+//     margin: 5px 5px 5px 5px;;
+//   }
+  
+//   nav input[type="button"]:hover {
+//     background-color: #45a010;
+//   }
+  
+//   /* Main lower div */
+//   #downdiv {
+//     width: 100vw;
+//     height: fit-content;
+//     border-radius: 20px;
+//     display: flex;
+//   }
+  
+  
+//   table[id="list"] {
+//     border-collapse: collapse;
+//     width: 100%;
+//     height: fit-content;
+//     text-align: center;
+//     border-radius: 20px;
+//     /* box-shadow: 0 0 10px rgb(98, 96, 96); */
+  
+//   }
+  
+//   table[id="details"] {
+//     /* display: flex; */
+//     border-collapse: collapse;
+//     /* width: 60vw; */
+//     width: fit-content;
+//     height: fit-content;
+//     text-align: center;
+//     /* justify-content: center; */
+//     /* align-items: flex-start; */
+//     border-radius: 20px;
+//     box-shadow: 0 0 10px rgb(98, 96, 96);
+//   }
+  
+//   th,h3 {
+//     border-radius: 20px;
+//     font-family: cursive;
+//     font-size: large;
+//     border-radius: 20px;
+//     margin: 3px 0px 3px 0px;;
+//     /* box-shadow: 0 0 10px rgb(98, 96, 96); */
+//   }
+  
+//   td input[type="button"] {
+//     cursor: pointer;
+//     font-size: 16px;
+//     font-family: cursive;
+//     border: 1px solid #ccc;
+//     border-radius: 5px;
+//     background-color: #4caf50;
+//     color: #fff;
+//     width: 12vw;
+//     height: 4vh;
+//     border-radius: 20px;
+//     margin: 3px 0px 3px 0px;
+//   }
+  
+//   td input[type="button"]:hover {
+//     background-color: "green";
+//   }
+  
+//   #left {
+//     width: 20vw;
+//   }
+  
+//   #right {
+//     width: 80vw;
+//     text-align: center;
+//   }
+  
+//   div[id="view"] {
+//     display: flex;
+//     justify-content: center;
+//     width:'100%';
+//     /* align-items: center; */
+//   }
+  
+//   select#myDropdown {
+//     width: calc(100% - 16px);
+//     padding: 12px;
+//     margin-bottom: 20px;
+//     box-sizing: border-box;
+//     border: 1px solid #ddd;
+//     border-radius: 6px;
+//     font-size: 16px;
+//     transition: border-color 0.3s ease-in-out;
+//   }
+  
+//   select#myDropdown:focus {
+//     outline: none;
+//     border-color: #66afe9;
+//   }
+  
+//   td label {
+//     /* width: calc(100% - 16px); */
+//     /* justify-content: left; */
+//     padding: 8px;
+//     border-radius: 16px;
+//     font-size: 14px;
+//   }
+  
+//   td input[type="text"] {
+//     /* width: calc(100% - 16px); */
+//     width: fit-content;
+//     padding: 8px;
+//     margin-top: 8px;
+//     margin-bottom: 8px;
+//     box-sizing: border-box;
+//     border: 1px solid #ccc;
+//     border-radius: 16px;
+//     font-size: 14px;
+//   }
+  
+//   select {
+//     color: rgb(136, 136, 141);
+//     padding: 5px 15px;
+//     border: none;
+//     border-radius: 16px;
+//     cursor: pointer;
+//     border: 1px solid #ccc;
+//   }
+  
+  

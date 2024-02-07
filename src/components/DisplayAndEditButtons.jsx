@@ -1,3 +1,5 @@
+import { Button } from "@mui/material"
+
 const DisplayAndEditButtons = (props) => {
     return (
         <>
@@ -6,22 +8,22 @@ const DisplayAndEditButtons = (props) => {
                     (
                         <tr>
                             <td>
-                                <button
+                                <Button
                                     onClick={() => {
                                         editEmployee(props.employees, props.setEmployess, props.selectedEmployee, props.setSelectedEmployee, props.setEditFlag)
                                     }}
                                 >
                                     Save
-                                </button>
+                                </Button>
                             </td>
                             <td>
-                                <button
+                                <Button
                                     onClick={() => {
                                         props.setEditFlag(false)
                                     }}
                                 >
                                     Cancel
-                                </button>
+                                </Button>
                             </td>
                         </tr>
                     )
@@ -29,22 +31,22 @@ const DisplayAndEditButtons = (props) => {
                     (
                             <tr>
                                 <td>
-                                    <button
+                                    <Button
                                         onClick={() => {
                                             deleteEmployee(props.employees, props.setEmployess, props.selectedEmployee, props.setSelectedEmployee, props.setDelEmpFlag)
                                         }}
                                     >
                                         Confirm
-                                    </button>
+                                    </Button>
                                 </td>
                                 <td>
-                                    <button
+                                    <Button
                                         onClick={() => {
                                             props.setDelEmpFlag(false)
                                         }}
                                     >
                                         Cancel
-                                    </button>
+                                    </Button>
                                 </td>
                             </tr>
                         )
@@ -52,22 +54,22 @@ const DisplayAndEditButtons = (props) => {
                         (
                             <tr>
                                 <td>
-                                    <button
+                                    <Button
                                         onClick={() => {
                                             props.setEditFlag(true);
                                         }}
                                         >
                                         Update
-                                    </button>
+                                    </Button>
                                 </td>
                                 <td>
-                                    <button
+                                    <Button
                                         onClick={() => {
                                             props.setDelEmpFlag(true)
                                         }}
                                     >
                                         Delete
-                                    </button>
+                                    </Button>
                                 </td>
                             </tr>
                         )

@@ -1,3 +1,5 @@
+import { Button } from "@mui/material";
+
 function searchSortHandle(employees, sortOrder, searchText) {
     let dummyEmployees = [...employees]
 
@@ -51,7 +53,28 @@ const List = (props) => {
             {
                 employees.map((employee, index) => {
                     return (
-                        <tr key={index}><td><input type="button" style={props.selectedEmployee.empId === employee.empId ? { backgroundColor: "green" } : { backgroundColor: "#4caf50" }}
+                        <tr key={index}><td>
+                            <Button
+                                variant="contained"
+                                style={{
+                                    backgroundColor: props.selectedEmployee.empId === employee.empId ? 'green' : '#4caf50',
+                                }}
+                                onClick={() => {
+                                    if (props.addEmpFlag === true) {
+                                        if (props.addEmployeeAndSelectEmployeeHandler()) {
+                                            props.setAddEmpFlag(false)
+                                            props.setSelectedEmployee(employee);
+                                        } else {
+                                            alert('Please cancel button or submit the employee details');
+                                        }
+                                    } else {
+                                        props.setSelectedEmployee(employee);
+                                    }
+                                }}
+                            >
+                                {employee.empName}
+                            </Button>
+                            {/* <input type="button" style={props.selectedEmployee.empId === employee.empId ? { backgroundColor: "green" } : { backgroundColor: "#4caf50" }}
                             value={employee.empName}
                             onClick={() => {
                                 if (props.addEmpFlag === true) {
@@ -64,7 +87,8 @@ const List = (props) => {
                                 } else {
                                     props.setSelectedEmployee(employee)
                                 }
-                            }} ></input></td></tr>
+                            }} ></input> */}
+                        </td></tr>
                     )
                 })
             }
