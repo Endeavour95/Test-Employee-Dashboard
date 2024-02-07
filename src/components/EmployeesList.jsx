@@ -1,123 +1,110 @@
-import { Button } from "@mui/material";
+import React from 'react';
+import { Table, TableBody, TableCell, TableRow, Paper, Typography, Button } from "@mui/material";
 
-function searchSortHandle(employees, sortOrder, searchText) {
-    let dummyEmployees = [...employees]
-
-    if (sortOrder && searchText) {
-        if (sortOrder === "ASC" && searchText) {
-            dummyEmployees = employees.filter(employee =>
-                employee.empName.toLowerCase().includes(searchText.toLowerCase()));
-            dummyEmployees.sort((a, b) => a.empName.localeCompare(b.empName));
-        } else
-            if (sortOrder === "DESC" && searchText) {
-                dummyEmployees = employees.filter(employee =>
-                    employee.empName.toLowerCase().includes(searchText.toLowerCase()));
-                dummyEmployees.sort((a, b) => b.empName.localeCompare(a.empName));
-            }
-    } else
-        if (searchText) {
-            dummyEmployees = employees.filter(employee =>
-                employee.empName.toLowerCase().includes(searchText.toLowerCase()));
-        } else
-            if (sortOrder) {
-                if (sortOrder === "DESC") {
-                    dummyEmployees.sort((a, b) => b.empName.localeCompare(a.empName));
-                }
-                if (sortOrder === "ASC") {
-                    dummyEmployees.sort((a, b) => a.empName.localeCompare(b.empName));
-                }
-            }
-
-    return dummyEmployees
-}
-
-const List = (props) => {
-    let employees = searchSortHandle(props.employees, props.sortOrder, props.searchText)
+function List(props) {
+    let employees = searchSortHandle(props.employees, props.sortOrder, props.searchText);
 
     return (
-        <tbody>
-            {
-                props.searchText ?
-                    <tr>
-                        <td>
-                            {
-                                employees.length > 0 ?
-                                    <p style={{ fontFamily: "cursive" }}>{employees.length} Records found</p>
-                                    :
-                                    <p style={{ color: "red", fontFamily: "cursive" }}>No Record found</p>
-                            }
-                        </td>
-                    </tr>
-                    : <></>
-            }
-            {
-                employees.map((employee, index) => {
-                    return (
-                        <tr key={index}><td>
-                            <Button
-                                variant="contained"
-                                style={{
-                                    backgroundColor: props.selectedEmployee.empId === employee.empId ? 'green' : '#4caf50',
-                                }}
-                                onClick={() => {
-                                    if (props.addEmpFlag === true) {
-                                        if (props.addEmployeeAndSelectEmployeeHandler()) {
-                                            props.setAddEmpFlag(false)
-                                            props.setSelectedEmployee(employee);
-                                        } else {
-                                            alert('Please cancel button or submit the employee details');
-                                        }
-                                    } else {
-                                        props.setSelectedEmployee(employee);
-                                    }
-                                }}
-                            >
-                                {employee.empName}
-                            </Button>
-                            {/* <input type="button" style={props.selectedEmployee.empId === employee.empId ? { backgroundColor: "green" } : { backgroundColor: "#4caf50" }}
-                            value={employee.empName}
+        <TableBody>
+            {props.searchText ? (
+                <TableRow>
+                    <TableCell>
+                        {employees.length > 0 ? (
+                            <Typography style={{ fontFamily: "cursive" }}>{employees.length} Records found</Typography>
+                        ) : (
+                            <Typography style={{ color: "red", fontFamily: "cursive" }}>No Record found</Typography>
+                        )}
+                    </TableCell>
+                </TableRow>
+            ) : (
+                <></>
+            )}
+            {employees.map((employee, index) => (
+                <TableRow key={index}>
+                    <TableCell>
+                        <Button
+                            style={{
+                                backgroundColor: props.selectedEmployee.empId === employee.empId ? "green" : "#4caf50",
+                            }}
                             onClick={() => {
                                 if (props.addEmpFlag === true) {
                                     if (props.addEmployeeAndSelectEmployeeHandler()) {
-                                        props.setAddEmpFlag(false)
-                                        props.setSelectedEmployee(employee)
+                                        props.setAddEmpFlag(false);
+                                        props.setSelectedEmployee(employee);
                                     } else {
-                                        alert("Please cancel button or submit the employess details")
+                                        alert("Please cancel button or submit the employess details");
                                     }
                                 } else {
-                                    props.setSelectedEmployee(employee)
+                                    props.setSelectedEmployee(employee);
                                 }
-                            }} ></input> */}
-                        </td></tr>
-                    )
-                })
-            }
-        </tbody>
-    )
+                            }}
+                        >
+                            {employee.empName}
+                        </Button>
+                    </TableCell>
+                </TableRow>
+            ))}
+        </TableBody>
+    );
 }
 
-const EmployeesList = (props) => {
+function EmployeesList(props) {
     return (
-        <div>
-            <table id="list">
-                <thead>
-                    <tr>
-                        <th>Employees List</th>
-                    </tr>
-                </thead>
-                <List
-                    employees={props.employees}
-                    selectedEmployee={props.selectedEmployee}
-                    setSelectedEmployee={props.setSelectedEmployee}
-                    addEmpFlag={props.addEmpFlag}
-                    setAddEmpFlag={props.setAddEmpFlag}
-                    searchText={props.searchText}
-                    sortOrder={props.sortOrder}
-                    addEmployeeAndSelectEmployeeHandler={props.addEmployeeAndSelectEmployeeHandler}
-                />
-            </table>
-        </div>
-    )
+        <>
+        {/* <Paper elevation={3}> */}
+            <Table>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>
+                            <Typography variant="h6">Employees List</Typography>
+                        </TableCell>
+                    </TableRow>
+                    <List
+                        employees={props.employees}
+                        selectedEmployee={props.selectedEmployee}
+                        setSelectedEmployee={props.setSelectedEmployee}
+                        addEmpFlag={props.addEmpFlag}
+                        setAddEmpFlag={props.setAddEmpFlag}
+                        searchText={props.searchText}
+                        sortOrder={props.sortOrder}
+                        addEmployeeAndSelectEmployeeHandler={props.addEmployeeAndSelectEmployeeHandler}
+                    />
+                </TableBody>
+            </Table>
+        {/* </Paper> */}
+        </>
+    );
 }
 
 export default EmployeesList;
+
+function searchSortHandle(employees, sortOrder, searchText) {
+    let dummyEmployees = [...employees];
+
+    if (sortOrder && searchText) {
+        if (sortOrder === "ASC" && searchText) {
+            dummyEmployees = employees.filter((employee) =>
+                employee.empName.toLowerCase().includes(searchText.toLowerCase())
+            );
+            dummyEmployees.sort((a, b) => a.empName.localeCompare(b.empName));
+        } else if (sortOrder === "DESC" && searchText) {
+            dummyEmployees = employees.filter((employee) =>
+                employee.empName.toLowerCase().includes(searchText.toLowerCase())
+            );
+            dummyEmployees.sort((a, b) => b.empName.localeCompare(a.empName));
+        }
+    } else if (searchText) {
+        dummyEmployees = employees.filter((employee) =>
+            employee.empName.toLowerCase().includes(searchText.toLowerCase())
+        );
+    } else if (sortOrder) {
+        if (sortOrder === "DESC") {
+            dummyEmployees.sort((a, b) => b.empName.localeCompare(a.empName));
+        }
+        if (sortOrder === "ASC") {
+            dummyEmployees.sort((a, b) => a.empName.localeCompare(b.empName));
+        }
+    }
+
+    return dummyEmployees;
+}

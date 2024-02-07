@@ -1,13 +1,15 @@
+import React from 'react';
+import { Paper, Typography } from "@mui/material";
 import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
 import DisplayEmployeeDetails from "./DisplayEmployeeDetails";
 
 const ViewDiv = (props) => {
     return (
         <>
-            <div id="view">
+            {/* <Paper elevation={3} style={{ padding: '10px', marginBottom: '10px' }}> */}
                 {
                     (Object.keys(props.selectedEmployee).length === 0 && props.addEmpFlag === false) ?
-                        <p>Please select an employee to view details.</p> :
+                        <Typography variant="body1">Please select an employee to view details.</Typography> :
                         (props.addEmpFlag === true) ?
                             <EmployeeRegistrationForm
                                 employees={props.employees}
@@ -33,9 +35,9 @@ const ViewDiv = (props) => {
                                 :
                                 null
                 }
-            </div>
+            {/* </Paper> */}
         </>
-    )
+    );
 }
 
 export default ViewDiv;

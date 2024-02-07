@@ -1,9 +1,11 @@
-import { Input, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Input, Select, MenuItem, InputLabel, FormControl, TextField, Paper } from '@mui/material';
 
 const Search = (props) => {
   return (
-    <Input
-      placeholder='🔎︎ Search ...'
+    <TextField
+      sx={{ m: 1, minWidth: 120 }} size="small"
+      id="outlined-basic" label="🔎︎ Search ..." variant="outlined"
+      // placeholder='🔎︎ Search ...'
       value={props.searchText}
       onChange={(e) => { props.setSearchText(e.target.value) }}
     />
@@ -12,19 +14,16 @@ const Search = (props) => {
 
 const Sort = (props) => {
   return (
-    <FormControl>
-      <InputLabel htmlFor="sort-order">Sort Order</InputLabel>
+    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+      <InputLabel id="demo-select-small-label">Sort</InputLabel>
       <Select
+        labelId="demo-select-small-label"
+        id="demo-select-small"
+        label="Sort"
         value={props.sortOrder}
         onChange={(e) => { props.setSortOrder(e.target.value) }}
-        inputProps={{
-          name: 'sortOrder',
-          id: 'sort-order',
-        }}
       >
-        <MenuItem value="">
-          Date Modified
-        </MenuItem>
+        <MenuItem value="">Date Modified</MenuItem>
         <MenuItem value="ASC">A to Z</MenuItem>
         <MenuItem value="DESC">Z to A</MenuItem>
       </Select>
@@ -34,64 +33,19 @@ const Sort = (props) => {
 
 const ToolBar = (props) => {
   return (
-    <div id='toolbar'>
-      <Search
-        searchText={props.searchText}
-        setSearchText={props.setSearchText}
-      />
-      <Sort
-        sortOrder={props.sortOrder}
-        setSortOrder={props.setSortOrder}
-      />
-    </div>
+    <>
+      {/* <Paper elevation={3}> */}
+        <Search
+          searchText={props.searchText}
+          setSearchText={props.setSearchText}
+        />
+        <Sort
+          sortOrder={props.sortOrder}
+          setSortOrder={props.setSortOrder}
+        />
+      {/* </Paper> */}
+    </>
   );
 }
 
 export default ToolBar;
-
-
-
-
-
-
-
-
-
-
-
-
-// const Search = (props) => {
-//     return (
-//         <input placeholder='🔎︎ Search ...' value={props.searchText}
-//             onInput={(e) => { props.setSearchText(e.target.value) }}
-//         />
-//     )
-// }
-
-// const Sort = (props) => {
-//     return (
-//         <select id="myList" value={props.sortOrder}
-//             onChange={(e) => { props.setSortOrder(e.target.value) }} >
-//             <option value="" > Date Modified </option>
-//             <option value="ASC" > A to Z </option>
-//             <option value="DESC" > Z to A </option>
-//         </select>
-//     )
-// }
-
-// const ToolBar = (props) => {
-//     return (
-//         <div id='toolbar'>
-//             <Search
-//                 searchText={props.searchText}
-//                 setSearchText={props.setSearchText}
-//             />
-//             <Sort
-//                 sortOrder={props.sortOrder}
-//                 setSortOrder={props.setSortOrder}
-//             />
-//         </div>
-//     )
-// }
-
-// export default ToolBar;

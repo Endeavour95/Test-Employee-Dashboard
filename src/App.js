@@ -4,9 +4,7 @@ import EmployeesDashboard from './components/EmployeesDashboard';
 
 function App() {
   return (
-    <>
       <EmployeesDashboard />
-    </>
   )
 }
 
